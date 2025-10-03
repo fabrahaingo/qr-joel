@@ -156,6 +156,9 @@ app.get("/qrcode", async (req, res) => {
         followLabel = function_tag;
         break;
       }
+      default: {
+        qr_url = encodeURI(`${APP_URL}/choose`);
+      }
     }
 
     const qrBuffer = await QRCode.toBuffer(qr_url, {
@@ -191,8 +194,8 @@ app.get("/qrcode", async (req, res) => {
                  fill: ${TEXT_COLOR}; }
       </style>
 
-      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label">
-        ${followLabel}
+      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label" ${followLabel ? "hidden" : ""}>
+        ${followLabel ?? ""}
       </text>
     </svg>`;
     const textBuffer = Buffer.from(textSvg);

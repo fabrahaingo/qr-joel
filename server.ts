@@ -39,6 +39,9 @@ const CHOOSE_PAGE_CONTENT = await fs.readFile(
 
 const APP_URL = `https://${APP_DOMAIN}`;
 const FRAME_PATH = path.join(__dirname, "frame.png");
+const FONT_PATH = path.join(__dirname, "fonts", "DejaVuSans-Bold.ttf");
+const FONT_BASE64 = await fs.readFile(FONT_PATH, { encoding: "base64" });
+const FONT_FAMILY = "JoelSans";
 
 app.use(express.static(path.join(__dirname)));
 
@@ -187,12 +190,23 @@ app.get("/qrcode", async (req, res) => {
     const textSvg = `
     <svg width="${String(frameW)}" height="${String(FONT_SIZE * 3)}"
          viewBox="0 0 ${String(frameW)} ${String(FONT_SIZE * 3)}" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        .label { font-family: Helvetica, Arial, sans-serif;
-                 font-weight: 700;
-                 font-size: ${String(FONT_SIZE)};
-                 fill: ${TEXT_COLOR}; }
-      </style>
+      <defs>
+        <style>
+          @font-face {
+            font-family: '${FONT_FAMILY}';
+            src: url('data:font/ttf;base64,${FONT_BASE64}') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+          }
+
+          .label {
+            font-family: '${FONT_FAMILY}', sans-serif;
+            font-weight: 700;
+            font-size: ${String(FONT_SIZE)};
+            fill: ${TEXT_COLOR};
+          }
+        </style>
+      </defs>
 
       <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label" ${followLabel ? "hidden" : ""}>
         ${followLabel ?? ""}

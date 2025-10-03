@@ -115,12 +115,6 @@ app.get("/qrcode", async (req, res) => {
       followType = "function_tag";
     }
 
-    if (followType == undefined)
-      return res.status(400).json({
-        error:
-          "One of people, function_tag and organisations must be provided.",
-      });
-
     let followLabel;
     let qr_url;
     switch (followType) {

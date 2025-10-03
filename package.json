@@ -9,10 +9,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "engines": {
-    "node": "v24.9.0",
-    "npm": "11.6.1"
-  },
   "dependencies": {
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",

@@ -382,3 +382,5 @@ app.listen(PORT, () => {
   console.log(`🚀 App running at APP_URL`);
   console.log(`📱 Try: ${APP_URL}/choose`);
 });
+
+console.log(`QR: JOEL gateway started successfully \u{2705}`);

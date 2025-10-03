@@ -209,7 +209,9 @@ app.get("/qrcode", async (req, res) => {
         </style>
       </defs>
 
-      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label" ${followLabel ? "hidden" : ""}>
+      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label" ${
+        followLabel ? "" : 'style="display: none;"'
+      }>
         ${followLabel ?? ""}
       </text>
     </svg>`;

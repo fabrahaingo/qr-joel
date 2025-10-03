@@ -233,7 +233,13 @@ app.get("/choose", async (req, res) => {
   try {
     let content = CHOOSE_PAGE_CONTENT;
 
-    const paramsNames = ["name", "organisation", "people", "verify"];
+    const paramsNames = [
+      "name",
+      "organisation",
+      "function_tag",
+      "people",
+      "verify",
+    ];
 
     const paramsWithValues: string[] = [];
     paramsNames.forEach((param) => {

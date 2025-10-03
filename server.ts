@@ -37,7 +37,7 @@ const CHOOSE_PAGE_CONTENT = await fs.readFile(
   "utf8",
 );
 
-const APP_URL = `https://${APP_DOMAIN}`;
+const APP_URL = `http://${APP_DOMAIN}`;
 const FRAME_PATH = path.join(__dirname, "frame.png");
 const FONT_PATH = path.join(__dirname, "fonts", "DejaVuSans-Bold.ttf");
 const FONT_BASE64 = await fs.readFile(FONT_PATH, { encoding: "base64" });

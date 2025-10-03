@@ -348,5 +348,5 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`🚀 App running at APP_URL`);
-    console.log(`📱 Try: ${APP_URL}/qrcode`);
+    console.log(`📱 Try: ${APP_URL}/choose`);
 });

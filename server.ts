@@ -342,7 +342,7 @@ app.get("/choose", async (req, res) => {
 
     switch (followType) {
       case "people":
-        startCommand = "Suivre " + followArg;
+        startCommand = "Rechercher " + followArg;
         await umami.log({ event: "/choose-app-people" });
         break;
       case "organisation":
@@ -364,9 +364,7 @@ app.get("/choose", async (req, res) => {
     );
     content = content.replace(
       "{TELEGRAM_LINK}",
-      encodeURI(
-        telegram_base_URL + startCommand.replace("Suivre", "Rechercher"), // flow is prettier with "Rechercher"
-      ),
+      encodeURI(telegram_base_URL + startCommand),
     );
 
     res.type("html").send(content);

@@ -37,7 +37,7 @@ const CHOOSE_PAGE_CONTENT = await fs.readFile(
   "utf8",
 );
 
-const APP_URL = `http://${APP_DOMAIN}`;
+const APP_URL = `https://${APP_DOMAIN}`;
 const FRAME_PATH = path.join(__dirname, "frame.png");
 
 app.use(express.static(path.join(__dirname)));

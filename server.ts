@@ -336,16 +336,19 @@ app.get("/choose", async (req, res) => {
     switch (followType) {
       case "people":
         startCommand = "Suivre " + followArg;
-        await umami.log({ event: "/gateway-people" });
+        await umami.log({ event: "/choose-app-people" });
         break;
       case "organisation":
         startCommand = "SuivreO " + followArg;
-        await umami.log({ event: "/gateway-organisation" });
+        await umami.log({ event: "/choose-app-organisation" });
         break;
       case "function_tag":
         startCommand = "SuivreF " + followArg;
-        await umami.log({ event: "/gateway-tag" });
+        await umami.log({ event: "/choose-app-tag" });
         break;
+
+      default:
+        await umami.log({ event: "/choose-app-default" });
     }
 
     content = content.replace(

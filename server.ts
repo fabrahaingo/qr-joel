@@ -330,7 +330,7 @@ app.get("/choose", async (req, res) => {
     content = content.replace("{BASE_URL}", APP_URL);
 
     const telegram_base_URL = `https://t.me/${TELEGRAM_BOT_NAME}?text=`;
-    const whatsapp_base_URL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=Bonjour JOEL! `;
+    const whatsapp_base_URL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=Bonjour JOEL ! `;
 
     let startCommand = "";
 

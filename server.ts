@@ -46,7 +46,7 @@ const CHOOSE_PAGE_CONTENT = await fs.readFile(
 
 const APP_URL = `http://${APP_DOMAIN}`;
 const FRAME_PATH = path.join(__dirname, "frame.png");
-const FONT_PATH = path.join(__dirname, "fonts", "DejaVuSans-Bold.ttf");
+const FONT_PATH = path.join(__dirname, "DejaVuSans-Bold.ttf");
 const FONT_BASE64 = await fs.readFile(FONT_PATH, { encoding: "base64" });
 const FONT_FAMILY = "JoelSans";
 

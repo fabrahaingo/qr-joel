@@ -29,6 +29,13 @@ if (TELEGRAM_BOT_NAME === undefined || WHATSAPP_PHONE_NUMBER === undefined) {
   );
 }
 
+if (
+  process.env.NODE_ENV !== "development" &&
+  (process.env.UMAMI_HOST === undefined || process.env.UMAMI_ID === undefined)
+) {
+  throw new Error("UMAMI env not set");
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -39,6 +46,22 @@ const CHOOSE_PAGE_CONTENT = await fs.readFile(
 
 const APP_URL = `http://${APP_DOMAIN}`;
 const FRAME_PATH = path.join(__dirname, "frame.png");
+const FONT_PATH = path.join(__dirname, "DejaVuSans-Bold.ttf");
+const FONT_BASE64 = await fs.readFile(FONT_PATH, { encoding: "base64" });
+const FONT_FAMILY = "JoelSans";
+
+const FONTCONFIG_FILE_PATH = path.join(__dirname, "fontconfig.conf");
+if (process.env.FONTCONFIG_FILE === undefined) {
+  try {
+    await fs.access(FONTCONFIG_FILE_PATH);
+  } catch {
+    const fontConfig = `<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n  <dir>${path.dirname(
+      FONT_PATH,
+    )}</dir>\n</fontconfig>\n`;
+    await fs.writeFile(FONTCONFIG_FILE_PATH, fontConfig, "utf8");
+  }
+  process.env.FONTCONFIG_FILE = FONTCONFIG_FILE_PATH;
+}
 
 app.use(express.static(path.join(__dirname)));
 
@@ -105,12 +128,6 @@ app.get("/qrcode", async (req, res) => {
       followType = "function_tag";
     }
 
-    if (followType == undefined)
-      return res.status(400).json({
-        error:
-          "One of people, function_tag and organisations must be provided.",
-      });
-
     let followLabel;
     let qr_url;
     switch (followType) {
@@ -156,6 +173,9 @@ app.get("/qrcode", async (req, res) => {
         followLabel = function_tag;
         break;
       }
+      default: {
+        qr_url = encodeURI(`${APP_URL}/choose`);
+      }
     }
 
     const qrBuffer = await QRCode.toBuffer(qr_url, {
@@ -184,15 +204,28 @@ app.get("/qrcode", async (req, res) => {
     const textSvg = `
     <svg width="${String(frameW)}" height="${String(FONT_SIZE * 3)}"
          viewBox="0 0 ${String(frameW)} ${String(FONT_SIZE * 3)}" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        .label { font-family: Helvetica, Arial, sans-serif;
-                 font-weight: 700;
-                 font-size: ${String(FONT_SIZE)};
-                 fill: ${TEXT_COLOR}; }
-      </style>
+      <defs>
+        <style>
+          @font-face {
+            font-family: '${FONT_FAMILY}';
+            src: url('data:font/ttf;base64,${FONT_BASE64}') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+          }
 
-      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label">
-        ${followLabel}
+          .label {
+            font-family: '${FONT_FAMILY}', sans-serif;
+            font-weight: 700;
+            font-size: ${String(FONT_SIZE)};
+            fill: ${TEXT_COLOR};
+          }
+        </style>
+      </defs>
+
+      <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" class="label" ${
+        followLabel ? "" : 'style="display: none;"'
+      }>
+        ${followLabel ?? ""}
       </text>
     </svg>`;
     const textBuffer = Buffer.from(textSvg);
@@ -230,7 +263,13 @@ app.get("/choose", async (req, res) => {
   try {
     let content = CHOOSE_PAGE_CONTENT;
 
-    const paramsNames = ["name", "organisation", "people", "verify"];
+    const paramsNames = [
+      "name",
+      "organisation",
+      "function_tag",
+      "people",
+      "verify",
+    ];
 
     const paramsWithValues: string[] = [];
     paramsNames.forEach((param) => {
@@ -306,23 +345,26 @@ app.get("/choose", async (req, res) => {
     content = content.replace("{BASE_URL}", APP_URL);
 
     const telegram_base_URL = `https://t.me/${TELEGRAM_BOT_NAME}?text=`;
-    const whatsapp_base_URL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=Bonjour JOEL! `;
+    const whatsapp_base_URL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=Bonjour JOEL ! `;
 
     let startCommand = "";
 
     switch (followType) {
       case "people":
-        startCommand = "Suivre " + followArg;
-        await umami.log({ event: "/gateway-people" });
+        startCommand = "Rechercher " + followArg;
+        await umami.log({ event: "/choose-app-people" });
         break;
       case "organisation":
         startCommand = "SuivreO " + followArg;
-        await umami.log({ event: "/gateway-organisation" });
+        await umami.log({ event: "/choose-app-organisation" });
         break;
       case "function_tag":
         startCommand = "SuivreF " + followArg;
-        await umami.log({ event: "/gateway-tag" });
+        await umami.log({ event: "/choose-app-tag" });
         break;
+
+      default:
+        await umami.log({ event: "/choose-app-default" });
     }
 
     content = content.replace(
@@ -331,8 +373,7 @@ app.get("/choose", async (req, res) => {
     );
     content = content.replace(
       "{TELEGRAM_LINK}",
-      encodeURI(telegram_base_URL + startCommand.replace("Suivre", "Rechercher") // flow is prettier with "Rechercher"
-      ),
+      encodeURI(telegram_base_URL + startCommand),
     );
 
     res.type("html").send(content);
@@ -343,10 +384,12 @@ app.get("/choose", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.type("text/plain").send("JOEL QR server is running.");
 });
 
 app.listen(PORT, () => {
   console.log(`🚀 App running at APP_URL`);
-  console.log(`📱 Try: ${APP_URL}/qrcode`);
+  console.log(`📱 Try: ${APP_URL}/choose`);
 });
+
+console.log(`QR: JOEL gateway started successfully \u{2705}`);

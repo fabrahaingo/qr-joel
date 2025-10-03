@@ -50,6 +50,19 @@ const FONT_PATH = path.join(__dirname, "DejaVuSans-Bold.ttf");
 const FONT_BASE64 = await fs.readFile(FONT_PATH, { encoding: "base64" });
 const FONT_FAMILY = "JoelSans";
 
+const FONTCONFIG_FILE_PATH = path.join(__dirname, "fontconfig.conf");
+if (process.env.FONTCONFIG_FILE === undefined) {
+  try {
+    await fs.access(FONTCONFIG_FILE_PATH);
+  } catch {
+    const fontConfig = `<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n  <dir>${path.dirname(
+      FONT_PATH,
+    )}</dir>\n</fontconfig>\n`;
+    await fs.writeFile(FONTCONFIG_FILE_PATH, fontConfig, "utf8");
+  }
+  process.env.FONTCONFIG_FILE = FONTCONFIG_FILE_PATH;
+}
+
 app.use(express.static(path.join(__dirname)));
 
 const DEFAULT_QRCODE_SIZE = 500;

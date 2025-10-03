@@ -29,6 +29,13 @@ if (TELEGRAM_BOT_NAME === undefined || WHATSAPP_PHONE_NUMBER === undefined) {
   );
 }
 
+if (
+  process.env.NODE_ENV !== "development" &&
+  (process.env.UMAMI_HOST === undefined || process.env.UMAMI_ID === undefined)
+) {
+  throw new Error("UMAMI env not set");
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

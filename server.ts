@@ -97,7 +97,7 @@ app.get("/qrcode", async (req, res) => {
     // name for people
     const name = (req.query.name ?? "") as string;
     if (name.length > 0) {
-      if (name.split(" ").length > 2)
+      if (name.split(" ").length < 2)
         return res.status(400).json({
           error:
             "Name parameter must be composed two words minimum: firstname lastname.",

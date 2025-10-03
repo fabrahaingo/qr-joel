@@ -58,27 +58,27 @@
         font-size: 0.95rem;
       }
 
-      .logo{
-          width:min(180px, 45vw);
-          height:auto;
+      .logo {
+        width: min(180px, 45vw);
+        height: auto;
       }
 
-      .qrcode{
-          width:min(180px, 45vw);
-          height:auto;
+      .qrcode {
+        width: min(180px, 45vw);
+        height: auto;
       }
-
     </style>
   </head>
   <body>
+    <img class="logo" src="{BASE_URL}/joel.jpg" alt="App logo" />
 
-  <img class="logo" src="{BASE_URL}/joel.jpg" alt="App logo" />
+    <img id="qrcode" class="qrcode" alt="QR code" src="{QR_URL}" {HIDDEN_QR} />
 
-      <img id="qrcode" class="qrcode" alt="QR code" src="{QR_URL}" {HIDDEN_QR}/>
+    <h1 id="title">
+      Ouvrez votre application de messagerie préférée pour suivre {FOLLOW_LABEL}
+    </h1>
 
-    <h1 id="title">Ouvrez votre application de messagerie préférée pour suivre {FOLLOW_LABEL}</h1>
-
-  <div class="apps">
+    <div class="apps">
       <a id="wa-link" class="app" href="{WHATSAPP_LINK}">
         <img
           src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
@@ -95,6 +95,5 @@
         <span class="label">Telegram</span>
       </a>
     </div>
-
   </body>
 </html>

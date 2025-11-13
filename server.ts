@@ -48,12 +48,12 @@ const telegramLinkBase = TELEGRAM_BOT_NAME
 const hasTelegram = TELEGRAM_BOT_NAME != null;
 
 const matrixLinkBase = MATRIX_BOT_USERNAME
-  ? `https://matrix.to/#/@${MATRIX_BOT_USERNAME}`
+  ? `https://matrix.to/#/user/@${MATRIX_BOT_USERNAME}`
   : null;
 const hasMatrix = MATRIX_BOT_USERNAME != null;
 
 const tchapLinkBase = TCHAP_BOT_USERNAME
-  ? `https://www.tchap.gouv.fr/#/@${TCHAP_BOT_USERNAME}`
+  ? `https://www.tchap.gouv.fr/#/user/@${TCHAP_BOT_USERNAME}`
   : null;
 const hasTchap = TCHAP_BOT_USERNAME != null;
 

@@ -571,41 +571,51 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/whatsapp", (req, res) => {
+app.get("/whatsapp", async (req, res) => {
+  await umami.log({ event: "/link-whatsapp" });
   if (whatsappLinkBase == null) {
+    console.log("Missing whatsappLinkBase");
     res.redirect(HOME_WEBSITE_URL);
     return;
   }
   res.redirect(encodeURI(whatsappLinkBase));
 });
 
-app.get("/matrix", (req, res) => {
+app.get("/matrix", async (req, res) => {
+  await umami.log({ event: "/link-matrix" });
   if (matrixLinkBase == null) {
+    console.log("Missing matrixLinkBase");
     res.redirect(HOME_WEBSITE_URL);
     return;
   }
   res.redirect(encodeURI(matrixLinkBase));
 });
 
-app.get("/tchap", (req, res) => {
+app.get("/tchap", async (req, res) => {
+  await umami.log({ event: "/link-tchap" });
   if (tchapLinkBase == null) {
+    console.log("Missing tchapLinkBase");
     res.redirect(HOME_WEBSITE_URL);
     return;
   }
   res.redirect(encodeURI(tchapLinkBase));
 });
 
-app.get("/telegram", (req, res) => {
+app.get("/telegram", async (req, res) => {
+  await umami.log({ event: "/link-telegram" });
   if (telegramLinkBase == null) {
+    console.log("Missing telegramLinkBase");
     res.redirect(HOME_WEBSITE_URL);
     return;
   }
   res.redirect(encodeURI(telegramLinkBase));
 });
 
-app.get("/signal", (req, res) => {
+app.get("/signal", async (req, res) => {
+  await umami.log({ event: "/link-signal" });
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (signalLinkBase == null) {
+    console.log("Missing signalLinkBase:");
     res.redirect(HOME_WEBSITE_URL);
     return;
   }

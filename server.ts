@@ -48,7 +48,7 @@ const telegramLinkBase = TELEGRAM_BOT_NAME
 const hasTelegram = TELEGRAM_BOT_NAME != null;
 
 const matrixLinkBase = MATRIX_BOT_USERNAME
-  ? `https://matrix.to/#/user/@${MATRIX_BOT_USERNAME}`
+  ? `https://matrix.to/#/@${MATRIX_BOT_USERNAME}`
   : null;
 const hasMatrix = MATRIX_BOT_USERNAME != null;
 

@@ -82,7 +82,7 @@ const INDEX_PAGE_CONTENT = await fs.readFile(
   "utf8",
 );
 
-const WHATSAPP_BLOCK = `<div class="rounded-md shadow">
+const WHATSAPP_BLOCK = `<div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
                   <a
                     id="wa-link"
                     class="app"

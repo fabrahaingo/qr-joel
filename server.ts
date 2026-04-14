@@ -27,7 +27,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const devPort = 8080;
 
-const PORT = isDev ? devPort : 443;
+const PORT = isDev ? devPort : 3000;
 
 const HOME_WEBSITE_URL = "https://joel-officiel.fr";
 const APP_URL = isDev

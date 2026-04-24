@@ -23,7 +23,7 @@ export const log = (args: { event: UmamiEvent; data?: object }) => {
     },
   };
 
-  void axios.post(endpoint, payload, options).catch((error) => {
+  void axios.post(endpoint, payload, options).catch((error: unknown) => {
     console.log(error);
   });
 };

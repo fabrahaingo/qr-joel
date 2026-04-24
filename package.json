@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsx server.ts",
-    "start:prod": "node dist/server.ts",
+    "start:prod": "node dist/server.js",
     "build": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

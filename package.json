@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsx server.ts",
+    "start:prod": "node dist/apps/telegramApp.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

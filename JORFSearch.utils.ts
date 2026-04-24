@@ -25,7 +25,7 @@ export async function callJORFSearchPeople(
   peopleName: string,
 ): Promise<JORFSearchItem[]> {
   try {
-    await umami.log({ event: "/jorfsearch-request-people" });
+    umami.log({ event: "/jorfsearch-request-people" });
     return await axios
       .get<JORFSearchResponse>(
         encodeURI(
@@ -43,7 +43,7 @@ export async function callJORFSearchPeople(
         // If the peopleName had nom/prenom inverted or bad formatting:
         // we need to call JORFSearch again with the response url in the correct format
         if (request.res?.responseUrl) {
-          await umami.log({ event: "/jorfsearch-request-people-formatted" });
+          umami.log({ event: "/jorfsearch-request-people-formatted" });
           return await axios
             .get<JORFSearchResponse>(
               request.res.responseUrl.endsWith("?format=JSON")
@@ -70,7 +70,7 @@ export async function callJORFSearchTag(
   tagValue?: string,
 ): Promise<JORFSearchItem[]> {
   try {
-    await umami.log({ event: "/jorfsearch-request-tag" });
+    umami.log({ event: "/jorfsearch-request-tag" });
     return await axios
       .get<JORFSearchResponse>(
         encodeURI(

@@ -310,7 +310,7 @@ app.get("/qrcode", async (req, res) => {
 
     /* 2) métadonnées du template ------------------------------------------ */
     const frame = sharp(FRAME_PATH);
-    const { width: frameW = 0, height: frameH = 0 } = await frame.metadata();
+    const { width: frameW, height: frameH } = await frame.metadata();
 
     /* 3) coordonnées du QR (centre bas) ----------------------------------- */
     const left = Math.round((frameW - qr_code_size) / 2);
@@ -360,13 +360,13 @@ app.get("/qrcode", async (req, res) => {
 
     switch (followType) {
       case "people":
-        void umami.log({ event: "/qr-people" });
+        umami.log({ event: "/qr-people" });
         break;
       case "organisation":
-        void umami.log({ event: "/qr-organisation" });
+        umami.log({ event: "/qr-organisation" });
         break;
       case "function_tag":
-        void umami.log({ event: "/qr-tag" });
+        umami.log({ event: "/qr-tag" });
         break;
     }
   } catch (err) {
@@ -511,19 +511,19 @@ app.get("/", async (req, res) => {
     switch (followType) {
       case "people":
         startCommand = "Rechercher " + followArg;
-        void umami.log({ event: "/link-people" });
+        umami.log({ event: "/link-people" });
         break;
       case "organisation":
         startCommand = "SuivreO " + followArg;
-        void umami.log({ event: "/link-organisation" });
+        umami.log({ event: "/link-organisation" });
         break;
       case "function_tag":
         startCommand = "SuivreF " + followArg;
-        void umami.log({ event: "/link-tag" });
+        umami.log({ event: "/link-tag" });
         break;
 
       default:
-        void umami.log({ event: "/link-default" });
+        umami.log({ event: "/link-default" });
         res.redirect(encodeURI("https://" + HOME_WEBSITE_URL));
         return;
     }
@@ -571,8 +571,8 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/whatsapp", async (req, res) => {
-  await umami.log({ event: "/link-whatsapp" });
+app.get("/whatsapp", (req, res) => {
+  umami.log({ event: "/link-whatsapp" });
   if (whatsappLinkBase == null) {
     console.log("Missing whatsappLinkBase");
     res.redirect(HOME_WEBSITE_URL);
@@ -581,8 +581,8 @@ app.get("/whatsapp", async (req, res) => {
   res.redirect(encodeURI(whatsappLinkBase));
 });
 
-app.get("/matrix", async (req, res) => {
-  await umami.log({ event: "/link-matrix" });
+app.get("/matrix", (req, res) => {
+  umami.log({ event: "/link-matrix" });
   if (matrixLinkBase == null) {
     console.log("Missing matrixLinkBase");
     res.redirect(HOME_WEBSITE_URL);
@@ -591,8 +591,8 @@ app.get("/matrix", async (req, res) => {
   res.redirect(encodeURI(matrixLinkBase));
 });
 
-app.get("/tchap", async (req, res) => {
-  await umami.log({ event: "/link-tchap" });
+app.get("/tchap", (req, res) => {
+  umami.log({ event: "/link-tchap" });
   if (tchapLinkBase == null) {
     console.log("Missing tchapLinkBase");
     res.redirect(HOME_WEBSITE_URL);
@@ -601,8 +601,8 @@ app.get("/tchap", async (req, res) => {
   res.redirect(encodeURI(tchapLinkBase));
 });
 
-app.get("/telegram", async (req, res) => {
-  await umami.log({ event: "/link-telegram" });
+app.get("/telegram", (req, res) => {
+  umami.log({ event: "/link-telegram" });
   if (telegramLinkBase == null) {
     console.log("Missing telegramLinkBase");
     res.redirect(HOME_WEBSITE_URL);
@@ -611,8 +611,8 @@ app.get("/telegram", async (req, res) => {
   res.redirect(encodeURI(telegramLinkBase));
 });
 
-app.get("/signal", async (req, res) => {
-  await umami.log({ event: "/link-signal" });
+app.get("/signal", (req, res) => {
+  umami.log({ event: "/link-signal" });
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (signalLinkBase == null) {
     console.log("Missing signalLinkBase:");
@@ -662,10 +662,10 @@ async function generateQrWithLogo(
   const logoMeta = await sharp(logoBuf).metadata();
 
   // 3) Center the logo directly onto the QR
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const left = Math.floor((qrSize - logoMeta.width!) / 2);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const top = Math.floor((qrSize - logoMeta.height!) / 2);
+
+  const left = Math.floor((qrSize - logoMeta.width) / 2);
+
+  const top = Math.floor((qrSize - logoMeta.height) / 2);
 
   return await sharp(qrBuffer)
     .composite([{ input: logoBuf, left, top }]) // no background

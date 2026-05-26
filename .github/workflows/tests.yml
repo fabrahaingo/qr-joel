@@ -1,4 +1,4 @@
-name: Lint
+name: Tests
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  lint:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run lint
-        run: npm run lint
+      - name: Run tests
+        run: npm test

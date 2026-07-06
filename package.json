@@ -25,18 +25,18 @@
     "tsx": "^4.22.3"
   },
   "devDependencies": {
-    "@cyclonedx/cyclonedx-npm": "^4.2.1",
+    "@cyclonedx/cyclonedx-npm": "^5.0.0",
     "@eslint/js": "^10.0.1",
     "@tsconfig/node24": "^24.0.4",
     "@types/express": "^5.0.6",
     "@types/qrcode": "^1.5.6",
-    "eslint": "^10.4.0",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "lefthook": "^2.1.8",
-    "npm-check-updates": "^22.2.1",
-    "prettier": "^3.8.3",
+    "eslint-plugin-prettier": "^5.5.6",
+    "lefthook": "^2.1.9",
+    "npm-check-updates": "^22.2.9",
+    "prettier": "^3.9.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.62.0"
   }
 }

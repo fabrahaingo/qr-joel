@@ -112,9 +112,11 @@ export async function callJORFSearchOrganisationByWikidataId(
 ): Promise<{ name: string; id: WikidataId }[]> {
   try {
     return await axios
-      .get<
-        { name: string; id: WikidataId }[]
-      >(encodeURI(`https://jorfsearch.steinertriples.ch/wikidata_id_to_name?ids[]=${wikidataId}`))
+      .get<{ name: string; id: WikidataId }[]>(
+        encodeURI(
+          `https://jorfsearch.steinertriples.ch/wikidata_id_to_name?ids[]=${wikidataId}`,
+        ),
+      )
       .then((r) => {
         return r.data;
       });

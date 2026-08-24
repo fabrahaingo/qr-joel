@@ -3,3 +3,7 @@
 /node_modules/
 /dist/
 /sbom.cdx.json
+
+
+# Generated at boot when FONTCONFIG_FILE is unset
+fontconfig.conf

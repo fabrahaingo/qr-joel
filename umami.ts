@@ -1,6 +1,9 @@
 import axios from "axios";
+import { isBotRequestContext } from "./requestContext.ts";
 
 export const log = (args: { event: UmamiEvent; data?: object }) => {
+  if (isBotRequestContext()) return;
+
   if (process.env.NODE_ENV === "development") {
     console.log("Umami event", args.event);
     return;
@@ -49,4 +52,7 @@ export type UmamiEvent =
   | "/jorfsearch-request-people"
   | "/jorfsearch-request-people-formatted"
   | "/jorfsearch-request-tag"
-  | "/jorfsearch-request-organisation";
+  | "/jorfsearch-request-organisation"
+  | "/jorfsearch-error"
+  | "/page-person"
+  | "/page-person-404";

@@ -1,0 +1,195 @@
+/*
+ * Styles for the person page.
+ *
+ * Plain CSS rather than utility classes: the committed Tailwind artifact is
+ * built from the old markup and contains none of the classes this layout needs.
+ */
+
+:root {
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --rule: #e5e7eb;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --surface: #ffffff;
+  --surface-alt: #f9fafb;
+}
+
+.person {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.person__breadcrumb {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.person__breadcrumb ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.person__breadcrumb li + li::before {
+  content: "›";
+  margin-right: 0.35rem;
+  color: var(--rule);
+}
+
+.person__breadcrumb a {
+  color: var(--muted);
+}
+
+.person h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+.person__summary {
+  font-size: 1.05rem;
+  margin: 0 0 1.5rem;
+}
+
+.person__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 0 0 2rem;
+  padding: 1rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--rule);
+  border-radius: 0.5rem;
+}
+
+.person__facts div {
+  margin: 0;
+}
+
+.person__facts dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.person__facts dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+}
+
+.person h2 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline > li {
+  position: relative;
+  padding: 0 0 1.25rem 1.25rem;
+  border-left: 2px solid var(--rule);
+}
+
+.timeline > li:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+
+.timeline > li::before {
+  content: "";
+  position: absolute;
+  left: -0.3rem;
+  top: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.timeline time {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.timeline__what {
+  font-weight: 600;
+}
+
+.timeline__detail {
+  margin: 0.15rem 0 0;
+}
+
+.timeline__source {
+  font-size: 0.85rem;
+}
+
+.person__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.person__list li {
+  background: var(--surface-alt);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.person__follow {
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.5rem;
+  background: var(--surface);
+}
+
+.person__source {
+  margin-top: 2.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.person a {
+  color: var(--accent);
+}
+
+.person a:hover {
+  color: var(--accent-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e5e7eb;
+    --muted: #9ca3af;
+    --rule: #374151;
+    --accent: #60a5fa;
+    --accent-dark: #93c5fd;
+    --surface: #111827;
+    --surface-alt: #1f2937;
+  }
+
+  body {
+    background: #0b1220;
+  }
+}
